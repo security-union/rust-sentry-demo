@@ -122,31 +122,6 @@ sentry::configure_scope(|scope| {
 });
 ```
 
-## Integrations
-
-An integration in sentry has two primary purposes. It can act as an _Event Source_, which will caprture new events; or as an _Event Processor_, which can modify every **Event** flowing through the pipeline.
-
-## Scope
-
-The scope is an object that can be cloned efficiently and stores data that is locally relevant to an event. For instance the scope will hold recorded breadcrumbs and similar information.
-
-The scope can be interacted with in two ways:
-
-1. The scope is routinely updated with information by functions such as add_breadcrumb which will modify the currently top-most scope.
-2. The topmost scope can also be configured through the configure_scope method.
-
-```rust
-let user = Some(User {
-    username: Some("Jaster Rogue".to_string()),
-    ..Default::default()
-});
-
-sentry::configure_scope(|scope| {
-    scope.set_extra("character.name", "Mighty Fighter".to_owned().into());
-    scope.set_user(user);
-});
-```
-
 ## Breadcrumbs 
 
 Sentry uses *breadcrumbs* to create a trail of events that happened prior to an issue.
@@ -156,8 +131,8 @@ To add a breadcrumb the SDK provides an *add_breadcrumb* function to add a new o
 This method accepts any object that implements **IntoBreadcrumbs**, the most common implementations that can be passed:
 
 + Breadcrumb
-+ Vec<BreadCrumb>
-+ Option<Breadcrumb>
++ Vec<<BreadCrumb>>
++ Option<<Breadcrumb>>
 + FnOnce() -> impl IntoBreadcrumbs
 
 ```rust
@@ -176,5 +151,32 @@ When an event is captured and sent to Sentry, SDKs will merge that event data wi
 You can think of the hub as the central point that our SDKs use to route an event to Sentry. When you call **init()** a hub is created and a client and a blank scope are created on it. That hub is then associated with the current thread and will internally hold a stack of scopes.
 
 
+### Scope
+
+The scope is an object that can be cloned efficiently and stores data that is locally relevant to an event. For instance the scope will hold recorded breadcrumbs and similar information.
+
+The scope can be interacted with in two ways:
+
+1. The scope is routinely updated with information by functions such as add_breadcrumb which will modify the currently top-most scope.
+2. The topmost scope can also be configured through the configure_scope method.
+
+The most useful operation when working with scopes is the configure-scope function. It can be used to reconfigure the current scope:
+
+```rust
+configure_scope(|scope| {
+    scope.set_tag("my-tag", "my value");
+    scope.set_user(Some(User {
+        id: Some(42.to_string()),
+        email: Some("john.doe@exmaple.com".into()),
+        ..Default::default()
+    }));
+});
+```
+
+## Integrations
+
+An integration in sentry has two primary purposes. It can act as an _Event Source_, which will caprture new events; or as an _Event Processor_, which can modify every **Event** flowing through the pipeline.
+
+[more about integrations here](https://docs.rs/sentry/0.22.0/sentry/integrations/index.html)
 
 
