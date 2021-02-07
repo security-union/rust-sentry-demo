@@ -2,7 +2,9 @@
 ## Usage
 
 To install the latest self-hosted sentry version, execute the *install-sentry-latest.sh* script. 
+
 It will create a *sentry-client* folder with the downloaded files there and install sentry locally for you.
+
 Create a user when it prompts to so you are able to login locally on the app.
 
 ### Sentry run
