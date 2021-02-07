@@ -1,9 +1,10 @@
 use sentry::{add_breadcrumb, protocol::Event, Breadcrumb, ClientOptions, IntoDsn, Scope, User};
 use std::sync::Arc;
 
+
 pub fn sentry_options() -> ClientOptions {
-    dotenv::dotenv().unwrap();
     let sentry_dsn = std::env::var("SENTRY_DSN").unwrap();
+
     ClientOptions {
         dsn: sentry_dsn.into_dsn().unwrap(),
         release: sentry::release_name!(),

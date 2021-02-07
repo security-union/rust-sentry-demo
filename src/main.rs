@@ -89,6 +89,7 @@ fn just_fail() -> Status {
 }
 
 fn main() {
+    dotenv::dotenv().ok();
     let _guard = sentry::init(sentry_options());
     sentry::configure_scope(default_scope);
 
