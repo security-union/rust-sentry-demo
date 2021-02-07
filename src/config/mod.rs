@@ -1,11 +1,11 @@
-use sentry::{Breadcrumb, ClientOptions, IntoDsn, Scope, User, add_breadcrumb, protocol::Event};
+use sentry::{add_breadcrumb, protocol::Event, Breadcrumb, ClientOptions, IntoDsn, Scope, User};
 use std::sync::Arc;
 
 pub fn sentry_options() -> ClientOptions {
+    dotenv::dotenv().unwrap();
+    let sentry_dsn = std::env::var("SENTRY_DSN").unwrap();
     ClientOptions {
-        dsn: "http://82b5a065d18642218a1f26cf3d037943@localhost:9000/1"
-            .into_dsn()
-            .unwrap(),
+        dsn: sentry_dsn.into_dsn().unwrap(),
         release: sentry::release_name!(),
         debug: true,
         attach_stacktrace: true,
