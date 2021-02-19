@@ -1,6 +1,6 @@
 [package]
 name = "sentry-test-app"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["Víctor Martínez <victorcoder2@gmail.com>"]
 edition = "2018"
 
@@ -13,7 +13,5 @@ features = ["helmet"]
 
 [dependencies]
 rocket = "0.4.6"
-serde = "1.0.123"
-serde_json = "1.0.62"
-sentry = "0.22.0"
 dotenv = "0.15.0"
+rocket_sentry_logger = "0.1.1"

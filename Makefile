@@ -2,7 +2,7 @@ install-latest-sentry:
 	./install-sentry-latest.sh
 
 run-sentry:
-	docker-compose -f ./sentry-client/docker-compose.yml up -d
+	cd sentry-client && docker-compose up -d
 
 down-sentry:
-	docker-compose -f ./sentry-client/docker-compose.yml down
+	cd sentry-client && docker-compose down
